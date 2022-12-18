@@ -56,7 +56,7 @@ pipeline {
 		
 		stage("Prod Env") {
 			steps {
-			 sshagent(['ubuntu']) {
+			 sshagent(['test1-jenkins']) {
 			    sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.110.162.80 sudo docker rm -f $(sudo docker ps -a -q)' 
 	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.110.162.80 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
 				}
