@@ -5,7 +5,7 @@ pipeline {
 	stages {
 		stage("SCM") {
 			steps {
-				git branch: 'main', url: 'https://github.com/siddharth0595/docker-javapileline-on-jenkins.git'
+				git branch: 'main', url: 'https://github.com/pawangaur98/docker-javapipeline-on-jenkins.git'
 				}
 			}
 
@@ -18,23 +18,23 @@ pipeline {
 		stage("Image") {
 			steps {
 				sh 'sudo docker build -t java-repo:$BUILD_TAG .'
-				sh 'sudo docker tag java-repo:$BUILD_TAG siddharth121/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker tag java-repo:$BUILD_TAG pawangaur/pipeline-java:$BUILD_TAG'
 				}
 			}
 				
 	
 		stage("Docker Hub") {
 			steps {
-			withCredentials([string(credentialsId: 'docker_hub', variable: 'docker_hub_password_var')])   {
-				sh 'sudo docker login -u siddharth121 -p ${docker_hub_password_var}'
-				sh 'sudo docker push siddharth121/pipeline-java:$BUILD_TAG'
+			withCredentials([string(credentialsId: 'docker_hub', variable: 'docker_hub_password_var')])    {
+				sh 'sudo docker login -u pawangaur -p ${docker_hub_password_var}'
+				sh 'sudo docker push pawangaur/pipeline-java:$BUILD_TAG'
 				}
 			}
 		}
 
 		stage("QAT Testing") {
 			steps {
-				sh 'sudo docker run -dit -p 8082:8080 --name web1 siddharth121/pipeline-java:$BUILD_TAG'
+				sh 'sudo docker run -dit -p 8082:8080 --name web1 pawangaur/pipeline-java:$BUILD_TAG'
 				}
 			}
 	 	stage("testing website") {
