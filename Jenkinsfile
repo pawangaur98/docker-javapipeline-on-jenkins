@@ -40,7 +40,7 @@ pipeline {
 	 	stage("testing website") {
 			steps {
 				retry(5) {
-				sh "curl --silent http://172.31.8.207:8082/java-web-app/ | grep -i india"
+				sh "curl --silent http://13.233.201.183:8082/java-web-app/ | grep -i india"
 				}
 	   		}
 		}
@@ -56,9 +56,9 @@ pipeline {
 		
 		stage("Prod Env") {
 			steps {
-			 sshagent(['ec2-call-slave2']) {
+			 sshagent(['ubuntu']) {
 			    sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.110.162.80 sudo docker rm -f $(sudo docker ps -a -q)' 
-	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.110.162.80 sudo docker run  -d  -p  49153:8080  siddharth121/pipeline-java:$BUILD_TAG"
+	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.110.162.80 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
 				}
 			}
 		}
