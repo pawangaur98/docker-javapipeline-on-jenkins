@@ -35,12 +35,13 @@ pipeline {
 		stage("QAT Testing") {
 			steps {
 				sh 'sudo docker run -dit -p 8082:8080 --name web1 pawangaur/pipeline-java:$BUILD_TAG'
+				sh ' docker rm -f $(docker ps -a -q)'
 				}
 			}
 	 	stage("testing website") {
 			steps {
 				retry(5) {
-				sh "| grep -i india curl --silent http://13.233.151.212:8082/java-web-app/ "
+				sh "grep -i india | curl --silent http://13.233.151.212:8082/java-web-app/ "
 				}
 	   		}
 		}
