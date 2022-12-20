@@ -34,8 +34,8 @@ pipeline {
 
 		stage("QAT Testing") {
 			steps {
+				sh ' docker rm -f $(docker ps -a -q)'
 				sh 'sudo docker run -dit -p 8082:8080 pawangaur/pipeline-java:$BUILD_TAG'
-//				sh ' docker rm -f $(docker ps -a -q)'
 				}
 			}
 	 	stage("testing website") {
@@ -58,8 +58,8 @@ pipeline {
 		stage("Prod Env") {
 			steps {
 			 sshagent(['ssh-credentials']) {
-			    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.233.44.215 sudo docker rm -f $(sudo docker ps -a -q)' 
-	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.44.215 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
+			    sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.109.158.89 sudo docker rm -f $(sudo docker ps -a -q)' 
+	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.109.158.89 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
 				}
 			}
 		}
