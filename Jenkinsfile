@@ -58,8 +58,8 @@ pipeline {
 		stage("Prod Env") {
 			steps {
 			 sshagent(['ssh-credentials']) {
-			    sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.109.158.89 sudo docker rm -f $(sudo docker ps -a -q)' 
-	                    sh "ssh -o StrictHostKeyChecking=no ec2-user@3.109.158.89 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
+			    sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.109.158.89 sudo docker rm -f $(sudo docker ps -a -q)' 
+	                    sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.158.89 sudo docker run  -d  -p  49153:8080  pawangaur/pipeline-java:$BUILD_TAG"
 				}
 			}
 		}
